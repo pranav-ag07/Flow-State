@@ -17,13 +17,11 @@ function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [zoomPageNum, setZoomPageNum] = useState<number | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
-  const [fsBarsVisible, setFsBarsVisible] = useState(false);
 
   const leftCanvasRef = useRef<HTMLCanvasElement>(null);
   const rightCanvasRef = useRef<HTMLCanvasElement>(null);
   const spreadWrapperRef = useRef<HTMLDivElement>(null);
   const bookSpreadRef = useRef<HTMLDivElement>(null);
-  const fsIdleTimer = useRef<number | null>(null);
 
   const computeScale = async () => {
     if (!pdfDoc || !spreadWrapperRef.current) return 1.4;
@@ -122,21 +120,6 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!isFS) return;
-    const showBars = () => {
-      setFsBarsVisible(true);
-      if (fsIdleTimer.current) clearTimeout(fsIdleTimer.current);
-      fsIdleTimer.current = window.setTimeout(() => setFsBarsVisible(false), 2500);
-    };
-    document.addEventListener('mousemove', showBars);
-    document.addEventListener('touchstart', showBars);
-    return () => {
-      document.removeEventListener('mousemove', showBars);
-      document.removeEventListener('touchstart', showBars);
-      if (fsIdleTimer.current) clearTimeout(fsIdleTimer.current);
-    };
-  }, [isFS]);
 
   const toggleFS = () => {
     const root = document.getElementById('root');
