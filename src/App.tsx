@@ -5,6 +5,7 @@ import SettingsModal from './components/SettingsModal';
 import ReaderPage from './pages/ReaderPage';
 import QuestionsPage from './pages/QuestionsPage';
 import HomePage from './pages/HomePage';
+import TasksPage from './pages/TasksPage';
 
 import * as pdfjsLib from 'pdfjs-dist';
 
@@ -32,8 +33,8 @@ function App() {
         <button className={`icon-btn ${isActive('/') ? 'active' : ''}`} onClick={() => navigate('/')}>
           <svg className="feather" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         </button>
-        <button className="icon-btn">
-          <svg className="feather" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <button className={`icon-btn ${isActive('/tasks') ? 'active' : ''}`} onClick={() => navigate('/tasks')}>
+          <svg className="feather" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
         </button>
         <button className={`icon-btn ${isActive('/questions') ? 'active' : ''}`} onClick={() => navigate('/questions')}>
           <svg className="feather" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -56,6 +57,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/reader" element={<ReaderPage />} />
           <Route path="/questions" element={<QuestionsPage />} />
+          <Route path="/tasks" element={<TasksPage />} />
         </Routes>
       </main>
     </div>
