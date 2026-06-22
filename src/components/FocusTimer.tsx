@@ -94,7 +94,7 @@ export default function FocusTimer() {
       >
         <svg className="feather" viewBox="0 0 24 24" style={{ width: 22, height: 22 }} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           {/* Background clock circle */}
-          <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.15)"></circle>
+          <circle cx="12" cy="12" r="10" stroke="rgba(250, 204, 21, 0.7)"></circle>
           {/* Progress clock circle */}
           <circle 
             cx="12" cy="12" r="10" 
@@ -104,7 +104,7 @@ export default function FocusTimer() {
             style={{ transition: 'stroke-dashoffset 1s linear', transformOrigin: 'center', transform: 'rotate(-90deg)' }}
           ></circle>
           {/* Clock hands */}
-          <polyline points="12 6 12 12 16 14"></polyline>
+          <polyline points="12 6 12 12 16 14" stroke="rgba(250, 204, 21, 0.7)"></polyline>
         </svg>
       </button>
 
@@ -118,7 +118,7 @@ export default function FocusTimer() {
               <circle 
                 className="timer-progress" 
                 cx="66" cy="66" r="60"
-                stroke="#ffffff"
+                stroke="rgba(250, 204, 21, 0.9)"
                 style={{ strokeDasharray: WIDGET_CIRCUMFERENCE, strokeDashoffset: isNaN(widgetOffset) ? 0 : widgetOffset }}
               ></circle>
             </svg>
