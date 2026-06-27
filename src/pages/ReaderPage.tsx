@@ -3,7 +3,6 @@ import * as pdfjsLib from 'pdfjs-dist';
 import ZoomModal from '../components/ZoomModal';
 
 let globalPdfDoc: pdfjsLib.PDFDocumentProxy | null = null;
-let globalPdfBytes: Uint8Array | null = null;
 let globalSpreadStart = 1;
 let globalTotalPages = 0;
 
@@ -127,7 +126,6 @@ export default function ReaderPage() {
     setLoadingProgress(30);
     pdfjsLib.getDocument({ data: bytes }).promise
       .then(pdf => {
-        globalPdfBytes = bytes;
         globalPdfDoc = pdf;
         globalTotalPages = pdf.numPages;
         globalSpreadStart = 1;

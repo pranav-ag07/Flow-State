@@ -314,7 +314,7 @@ export default function SyllabusPage() {
 
   const renderSyllabus = (title: string, syllabusData: any[]) => {
     return (
-      <div style={{ padding: '2rem', paddingBottom: '100px', color: '#e0e0e0', height: '100%', overflowY: 'auto' }}>
+      <div className="hide-scrollbar" style={{ padding: '2rem', paddingBottom: '100px', color: '#e0e0e0', height: '100%', overflowY: 'auto' }}>
         <style>{`
           .ch-tooltip {
             position: relative;
@@ -361,16 +361,20 @@ export default function SyllabusPage() {
             -webkit-appearance: none;
             width: 18px;
             height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 6px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
             cursor: pointer;
             position: relative;
             transition: all 0.2s ease;
           }
           .custom-checkbox:checked {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
             border-color: #4CAF50;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            transform: scale(1.1);
           }
           .custom-checkbox:checked::after {
             content: "";
@@ -410,12 +414,16 @@ export default function SyllabusPage() {
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           {syllabusData.map((part, i) => (
             <div key={i} style={{
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '12px',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderTop: '1px solid rgba(255,255,255,0.15)',
+              borderLeft: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '20px',
               padding: '2rem',
-              marginBottom: '2rem',
-              backdropFilter: 'blur(10px)'
+              marginBottom: '3rem',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
             }}>
               <h2 style={{ fontSize: '1.5rem', marginTop: 0, color: '#f7f4f0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 {part.icon} {part.title}
@@ -430,8 +438,12 @@ export default function SyllabusPage() {
                     justifyContent: 'space-between',
                     padding: '1rem',
                     borderBottom: j < part.chapters.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-                    gap: '2rem'
-                  }}>
+                    gap: '2rem',
+                    transition: 'background 0.2s',
+                    borderRadius: '8px'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
+                  onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0 }}>
                       <div className="ch-tooltip">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -526,16 +538,30 @@ export default function SyllabusPage() {
               key={topic} 
               onClick={() => setActiveTopic(topic)}
               style={{
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '12px',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderTop: '1px solid rgba(255,255,255,0.2)',
+                borderLeft: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: '16px',
                 padding: '2rem',
-                background: 'rgba(255, 255, 255, 0.03)',
-                backdropFilter: 'blur(10px)',
-                transition: 'transform 0.2s, background 0.2s',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
                 cursor: 'pointer',
                 textAlign: 'center',
                 fontSize: '1.25rem',
-                fontWeight: '500'
+                fontWeight: '600'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%)';
               }}
             >
               {topic}
@@ -567,7 +593,7 @@ export default function SyllabusPage() {
   const overallCompletionPercentage = totalChapters > 0 ? Math.round(((studiedCount + rev1Count + rev2Count + q100Count) / (totalChapters * 4)) * 100) : 0;
 
   return (
-    <div style={{ padding: '2rem', color: '#e0e0e0', height: '100%', overflowY: 'auto', paddingBottom: '100px' }}>
+    <div className="hide-scrollbar" style={{ padding: '2rem', color: '#e0e0e0', height: '100%', overflowY: 'auto', paddingBottom: '100px' }}>
       <h1 style={{ fontSize: '2.5rem', marginBottom: '2.5rem' }}>Syllabus Dashboard</h1>
       
       <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#f7f4f0' }}>Subjects</h2>
@@ -585,16 +611,31 @@ export default function SyllabusPage() {
               else setActiveTopic(subject);
             }}
             style={{
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '12px',
-              padding: '2rem',
-              background: 'rgba(255, 255, 255, 0.03)',
-              backdropFilter: 'blur(10px)',
-              transition: 'transform 0.2s, background 0.2s',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderTop: '1px solid rgba(255,255,255,0.25)',
+              borderLeft: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '20px',
+              padding: '2.5rem',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
               cursor: 'pointer',
               textAlign: 'center',
               fontSize: '1.5rem',
-              fontWeight: '600'
+              fontWeight: '700',
+              textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)';
             }}
           >
             {subject}
@@ -624,15 +665,27 @@ export default function SyllabusPage() {
             const pct = stat.total > 0 ? Math.round((stat.count / stat.total) * 100) : 0;
             return (
             <div key={stat.label} style={{
-              background: 'rgba(255, 255, 255, 0.03)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)',
               border: `1px solid rgba(255, 255, 255, 0.1)`,
               borderTop: `3px solid ${stat.color}`,
-              borderRadius: '12px',
+              borderRadius: '16px',
               padding: '1.5rem',
               textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              transition: 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
             }}>
               <div>
                 <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.2rem' }}>
