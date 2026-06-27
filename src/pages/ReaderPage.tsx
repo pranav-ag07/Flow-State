@@ -2,10 +2,15 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import ZoomModal from '../components/ZoomModal';
 
+let globalPdfDoc: pdfjsLib.PDFDocumentProxy | null = null;
+let globalPdfBytes: Uint8Array | null = null;
+let globalSpreadStart = 1;
+let globalTotalPages = 0;
+
 export default function ReaderPage() {
-  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
-  const [totalPages, setTotalPages] = useState(0);
-  const [spreadStart, setSpreadStart] = useState(1);
+  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(globalPdfDoc);
+  const [totalPages, setTotalPages] = useState(globalTotalPages);
+  const [spreadStart, setSpreadStart] = useState(globalSpreadStart);
   const [isFS, setIsFS] = useState(false);
   const [isRendering, setIsRendering] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -114,10 +119,18 @@ export default function ReaderPage() {
     }
   };
 
+  useEffect(() => {
+    globalSpreadStart = spreadStart;
+  }, [spreadStart]);
+
   const loadPDF = (bytes: Uint8Array) => {
     setLoadingProgress(30);
     pdfjsLib.getDocument({ data: bytes }).promise
       .then(pdf => {
+        globalPdfBytes = bytes;
+        globalPdfDoc = pdf;
+        globalTotalPages = pdf.numPages;
+        globalSpreadStart = 1;
         setPdfDoc(pdf);
         setTotalPages(pdf.numPages);
         setSpreadStart(1);

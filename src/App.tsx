@@ -6,6 +6,7 @@ import ReaderPage from './pages/ReaderPage';
 import QuestionsPage from './pages/QuestionsPage';
 import HomePage from './pages/HomePage';
 import TasksPage from './pages/TasksPage';
+import SyllabusPage from './pages/SyllabusPage';
 
 import * as pdfjsLib from 'pdfjs-dist';
 
@@ -45,6 +46,13 @@ function App() {
 
         <FocusTimer />
 
+        <button className={`icon-btn ${isActive('/syllabus') ? 'active' : ''}`} onClick={() => navigate('/syllabus')} title="Syllabus">
+          <svg className="feather" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </button>
+
         <div className="sidebar-spacer"></div>
 
         <button className="icon-btn" onClick={() => setIsSettingsOpen(true)}>
@@ -58,6 +66,7 @@ function App() {
           <Route path="/reader" element={<ReaderPage />} />
           <Route path="/questions" element={<QuestionsPage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/syllabus" element={<SyllabusPage />} />
         </Routes>
       </main>
     </div>
